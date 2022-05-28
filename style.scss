@@ -1,0 +1,154 @@
+$color1: #f5f0e1;
+$color2: #1e3d59;
+$color3: #ff6e40;
+$color4: #ffc13b;
+
+body {
+    display: flex;
+    background-color: $color1;
+    flex-direction: column;
+    text-align: center;
+    color: $color2;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+.games{
+    border: 0.4rem solid $color2;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes rod { 
+    0% {
+        transform: scaley(0.2);
+    }
+    100% {
+        transform: scaley(1);
+    }
+}
+
+.loading {
+    width: 30rem;
+    height: 20rem;
+    margin: auto;
+    justify-content: space-between;
+    display: flex;
+    &__rod{
+        background-color: $color3;
+        width: 2rem;
+        height: 15rem;
+        animation: rod 1s infinite alternate;
+        @for $i from 1 through 10 {
+        &--#{$i}{
+            animation-delay: $i*200ms;
+        }
+    }
+        &--second {
+            background-color: $color4;
+            animation-direction: alternate-reverse;
+            &:hover {
+                cursor: pointer;
+                animation-play-state: paused;
+            }
+        }
+    }
+    
+}
+
+@keyframes ball { 
+    0% {
+        transform: translatex(40rem);
+    }
+    100% {
+        transform: translatex(-40rem);
+    }
+}
+
+.reaction {
+    margin: auto;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    &__pointer{
+        margin: auto;
+        margin-bottom: 0.5rem;
+        width: 0.4rem;
+        height: 4rem;
+        background-color: $color3;
+    }
+    &__ball {
+        margin: auto;
+        margin-bottom: 0.5rem;
+        width: 5rem;
+        height: 5rem;
+        animation: ball 5s  both infinite alternate;
+        &:checked {
+            animation-play-state: paused;
+        }
+    }
+}
+
+@keyframes machine { 
+    0% {
+        transform: scaley(0)
+    }
+    25% {
+        transition-timing-function: cubic-bezier(.95,.01,.95,.12);
+    }
+    50% {
+        transition-timing-function: cubic-bezier(.52,.59,.56,.61);
+    }
+    75% {
+        transition-timing-function: cubic-bezier(.38,.68,.41,.9);
+        transition-delay: 0.5s;
+    }
+    100% {
+        transition-timing-function: cubic-bezier(.01,1.29,.26,1.04);
+        transition-delay: 2s;
+        transform: scaley(random(100)/100)
+    }
+}
+@keyframes btn {
+    25% {
+        transform: translate(-0.2rem, -0.3rem);
+    }
+    75% {
+        transform: translate(0.1rem, 0.3rem);
+    }
+}
+
+.testing {
+    margin: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    &__btn{
+        margin: auto;
+        margin-bottom: 0.5rem;
+        width: 12rem;
+        height: 3rem;
+        border-radius: 1rem;
+        border: 0.1rem solid $color4;
+        background-color: $color3;
+        color: $color4;
+        font-size: 1rem;
+        cursor: pointer;
+        &:active {
+            animation: btn 1s;
+        }
+        &:active + .testing__machine > .testing__machine__rod {
+                transform-origin: bottom;
+                animation: machine 1s both;
+            }
+    }
+    &__machine {
+        margin: auto;
+        margin-bottom: 1rem;
+        border: 0.4rem solid $color2;
+        &__rod {
+            margin: 0.4rem;
+            width: 3rem;
+            height: 20rem;
+            background-color: $color3;
+            transform: scaley(0)
+        }
+    }
+} 
